@@ -3,4 +3,12 @@
 
     <string name="post_id_title">%1$s. TITLE: %2$s</string>
     <string name="comment_name_email">NAME: %1$s\nEMAIL: %2$s</string>
+    <string name="downloading">Downloading posts and comments</string>
+    <string name="downloaded_successfully">Downloaded successfully. %1$d post(s) and %2$d comment(s) are downloaded.\nPlease click the button below to go next.</string>
+    <string name="downloaded_failed">Failed to download: %1$s</string>
+    <string name="search">Search</string>
+    <string name="result_found">Result(s) found</string>
+    <string name="next">next</string>
+    <string name="selected_post">Selected Post</string>
+    <string name="comments">Comments</string>
 </resources>

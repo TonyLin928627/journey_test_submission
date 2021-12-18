@@ -19,63 +19,75 @@ class PostRepository @Inject constructor(
     context: Context)
 : IPostRepository {
 
+    companion object {
+        private const val LastDownloadTime = "LastDownloadTime"
+        private const val DownloadInterval = 60_000 //one minute
+    }
     private val sharedPreferences = context.getSharedPreferences(this::class.java.canonicalName, Context.MODE_PRIVATE)
 
+    /**
+     * clean the database by deleting all existing posts and comments
+     */
     override suspend fun deletePostsAndComments(){
         postDao.delete()
         commentDao.delete()
     }
 
+    /**
+     * download posts and comments from endponts and save to local database
+     */
     override suspend fun downloadPostsAndComments(): Pair<Int, Int> {
+        //1. download and save posts
         var postCount = 0
         apiService.getPosts().also { postCount = it.size }.forEach { post ->
             postDao.insertPost(post)
         }
 
+        //2. download and save comments
         var commentCount = 0
         apiService.getComments().also { commentCount = it.size }.forEach { comment->
             commentDao.insertComment(comment = comment)
         }
 
-        sharedPreferences.edit().putLong("LastDownloadTime", System.currentTimeMillis()).apply()
+        //3. save the time when this download/save iss done
+        sharedPreferences.edit().putLong(LastDownloadTime, System.currentTimeMillis()).apply()
         return Pair(postCount, commentCount)
     }
 
-    override suspend fun downloadNewPosts() {
-        apiService.getPosts().forEach { post ->
-            postDao.checkIfPostExists(post.id).takeIf { it == 0 }?.let {
-                postDao.insertPost(post)
-            }
-        }
-    }
-
-    override suspend fun downloadNewCommentsOfPost(post: Post) {
-        apiService.getCommentsByPostId(postId = post.id).forEach { comment->
-            commentDao.checkIfCommentExists(comment.id).takeIf { it == 0 }?.let {
-                commentDao.insertComment(comment = comment)
-            }
-        }
-    }
-
+    /**
+     * query all saved posts from database
+     */
     override fun getAllPosts(): Flow<List<Post>> {
         return postDao.getPosts()
     }
 
+    /**
+     * query posts with the given search key.
+     * The posts that contain "search key" in their title or body,
+     * or have comments that contain the "search key" will be returned
+     */
     override fun getPostsWithSearchKey(searchKey: String): Flow<List<Post>>{
         return flow {
             val postIds = commentDao.getPostIdsWithSearchKey("%$searchKey%")
             val posts = postDao.getPostIdsWithSearchKey("%$searchKey%", postIds)
 
-            Log.d("searchKey", "$searchKey ${posts.size}")
+            Log.d("searchKey", "$searchKey -> ${posts.size}")
             emit(posts)
         }
     }
 
+    /**
+     * query all the comments belong to the given post
+     */
     override fun getCommentsOfPost(post: Post): List<Comment> {
        return commentDao.getCommentsByPostId(postId = post.id)
     }
 
+    /**
+     * check weather or not should downland and save posts and comments
+     * return true if the interval between present and last download/save is greater than the value of const DownloadInterval
+     */
     override fun isDownloadingNeeded(): Boolean {
-        return (System.currentTimeMillis() - sharedPreferences.getLong("LastDownloadTime", 0)) > 60_000
+        return (System.currentTimeMillis() - sharedPreferences.getLong(LastDownloadTime, Long.MAX_VALUE)) > DownloadInterval
     }
 }

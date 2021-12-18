@@ -35,13 +35,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
-                     android:maxLines="2"
+                    android:maxLines="2"
                     android:paddingHorizontal="12dp"
                     android:textColor="@color/purple_500"
                     android:textStyle="bold"
-                    android:drawableStart="@drawable/ic_baseline_search_24"
                     android:background="@drawable/border_bottom"
-                    android:text="@{viewModel.searchResultCount}" />
+                    android:text="@{viewModel.searchResultCount}"
+                    app:drawableStartCompat="@drawable/ic_baseline_search_24" />
 
 
                 <EditText

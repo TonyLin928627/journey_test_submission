@@ -1,11 +1,11 @@
 package com.tony.journeytest.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -36,10 +36,10 @@ class DownloadFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        // check if or not download.
         when (viewModel.shouldStartDownload()){
-            true -> {
-                this.viewModel.startDownloading()
+            true -> {//start download and update UI when download is completed if true
+                this.viewModel.startDownloading(context = context!!)
 
                 this.viewModel.isDownloadSuccess.observe(this.viewLifecycleOwner) { isSuccess ->
                     when (isSuccess){
@@ -48,7 +48,7 @@ class DownloadFragment : Fragment() {
                 }
             }
 
-            false -> {
+            false -> {//navigate to next destination if no need to download
                 findNavController().navigate(R.id.navigation_main)
             }
         }

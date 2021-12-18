@@ -1,6 +1,8 @@
 package com.tony.journeytest.viewModels
 
+import android.content.Context
 import androidx.lifecycle.*
+import com.tony.journeytest.R
 import com.tony.journeytest.entities.Comment
 import com.tony.journeytest.entities.Post
 import com.tony.journeytest.repositories.IPostRepository
@@ -11,8 +13,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostsViewModel @Inject constructor(
-    private val postsRepository: IPostRepository
+    private val postsRepository: IPostRepository,
+    context: Context
 ) : ViewModel()  {
+
+    private val searchText = context.resources.getText(R.string.search)
+    private val resultFoundText = context.getText(R.string.result_found)
 
     val searchKey = MutableLiveData<String>("")
 
@@ -27,8 +33,8 @@ class PostsViewModel @Inject constructor(
     val searchResultCount = postsToDisplay.switchMap {
         MutableLiveData<String?>().apply {
             when (searchKey.value?.isNotBlank()) {
-                true -> "${it.size.toString()} results found"
-                else -> "Search"
+                true -> "${it.size} $resultFoundText"
+                else -> searchText.toString()
             }.let {
                 postValue(it)
             }

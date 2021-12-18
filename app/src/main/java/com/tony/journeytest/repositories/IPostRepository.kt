@@ -9,10 +9,6 @@ interface IPostRepository {
 
     suspend fun downloadPostsAndComments(): Pair<Int, Int>
 
-    suspend fun downloadNewPosts()
-
-    suspend fun downloadNewCommentsOfPost(post: Post)
-
     fun getAllPosts(): Flow<List<Post>>
 
     fun getPostsWithSearchKey(searchKey: String): Flow<List<Post>>
