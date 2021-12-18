@@ -57,6 +57,7 @@ class CommentsOfPostFragment : Fragment() {
 
         //3. set listener to pop back to previous destination
         this.binding.postCardView.setOnClickListener{findNavController().popBackStack()}
+        this.binding.commentsCard.setOnClickListener{findNavController().popBackStack()}
     }
 
     /**
