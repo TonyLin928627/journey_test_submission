@@ -22,4 +22,7 @@ interface CommentDao {
 
     @Query("SELECT postId FROM comments WHERE body LIKE :searchKey")
     suspend fun getPostIdsWithSearchKey(searchKey: String): List<Int>
+
+    @Query("SELECT * FROM comments WHERE postId = :postId AND body LIKE :searchKey")
+    suspend fun getCommentsWithSearchKey(postId: Int, searchKey: String): List<Comment>
 }

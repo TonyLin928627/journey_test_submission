@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Jourrney Test</string>
+    <string name="app_name">Journey Test</string>
 
     <string name="post_id_title">%1$s. TITLE: %2$s</string>
     <string name="comment_name_email">NAME: %1$s\nEMAIL: %2$s</string>

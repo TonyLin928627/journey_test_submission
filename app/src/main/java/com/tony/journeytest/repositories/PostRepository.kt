@@ -68,8 +68,8 @@ class PostRepository @Inject constructor(
      */
     override fun getPostsWithSearchKey(searchKey: String): Flow<List<Post>>{
         return flow {
-            val postIds = commentDao.getPostIdsWithSearchKey("%$searchKey%")
-            val posts = postDao.getPostIdsWithSearchKey("%$searchKey%", postIds)
+            val postIds = commentDao.getPostIdsWithSearchKey(searchKey.toSearchKey())
+            val posts = postDao.getPostIdsWithSearchKey(searchKey.toSearchKey(), postIds)
 
             Log.d("searchKey", "$searchKey -> ${posts.size}")
             emit(posts)
@@ -84,10 +84,21 @@ class PostRepository @Inject constructor(
     }
 
     /**
+     * query the comments that their body contain the search key
+     */
+    override suspend fun getCommentsOfPostWithSearchKey(post: Post, searchKey: String): List<Comment>{
+        return commentDao.getCommentsWithSearchKey(postId = post.id, searchKey = searchKey.toSearchKey())
+    }
+
+    /**
      * check weather or not should downland and save posts and comments
      * return true if the interval between present and last download/save is greater than the value of const DownloadInterval
      */
     override fun isDownloadingNeeded(): Boolean {
         return (System.currentTimeMillis() - sharedPreferences.getLong(LastDownloadTime, Long.MAX_VALUE)) > DownloadInterval
     }
+}
+
+private fun String.toSearchKey(): String {
+    return "%$this%"
 }
