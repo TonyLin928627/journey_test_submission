@@ -1,11 +1,11 @@
-package com.tony.jourrneytest.db
+package com.tony.journeytest.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.tony.jourrneytest.db.daos.CommentDao
-import com.tony.jourrneytest.db.daos.PostDao
-import com.tony.jourrneytest.entities.Comment
-import com.tony.jourrneytest.entities.Post
+import com.tony.journeytest.db.daos.CommentDao
+import com.tony.journeytest.db.daos.PostDao
+import com.tony.journeytest.entities.Comment
+import com.tony.journeytest.entities.Post
 
 // Database versions:
 //  1 - Initial version: Two tables, Posts, Comments

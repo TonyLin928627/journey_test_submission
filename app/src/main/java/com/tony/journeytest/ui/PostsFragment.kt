@@ -1,21 +1,21 @@
-package com.tony.jourrneytest.ui
+package com.tony.journeytest.ui
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.tony.jourrneytest.R
-import com.tony.jourrneytest.databinding.FragmentCommentsOfPostBinding
+import androidx.navigation.Navigation
+import com.tony.journeytest.R
+import com.tony.journeytest.databinding.FragmentPostsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class CommentsOfPostFragment : Fragment() {
+class PostsFragment : Fragment() {
 
-    private lateinit var binding: FragmentCommentsOfPostBinding
-
+    private lateinit var binding: FragmentPostsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,7 +23,7 @@ class CommentsOfPostFragment : Fragment() {
     ): View {
         this.binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_comments_of_post,
+            R.layout.fragment_posts,
             container, false
         )
         return binding.root
@@ -32,8 +32,6 @@ class CommentsOfPostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.commentsOfPostLabel.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        this.binding.postsLabel.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.commentsOfPostFragment))
     }
 }

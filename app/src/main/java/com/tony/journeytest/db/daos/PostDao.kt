@@ -1,9 +1,9 @@
-package com.tony.jourrneytest.db.daos
+package com.tony.journeytest.db.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.tony.jourrneytest.entities.Post
+import com.tony.journeytest.entities.Post
 import kotlinx.coroutines.flow.Flow
 
 @Dao

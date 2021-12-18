@@ -1,9 +1,9 @@
-package com.tony.jourrneytest.di
+package com.tony.journeytest.di
 
 import android.content.Context
-import com.tony.jourrneytest.BuildConfig
-import com.tony.jourrneytest.restApi.ApiServiceBuilder
-import com.tony.jourrneytest.restApi.IJsonPlaceholderApi
+import com.tony.journeytest.BuildConfig
+import com.tony.journeytest.restApi.ApiServiceBuilder
+import com.tony.journeytest.restApi.IJsonPlaceholderApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

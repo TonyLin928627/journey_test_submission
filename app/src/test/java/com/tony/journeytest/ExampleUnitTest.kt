@@ -1,4 +1,4 @@
-package com.tony.jourrneytest
+package com.tony.journeytest
 
 import org.junit.Test
 

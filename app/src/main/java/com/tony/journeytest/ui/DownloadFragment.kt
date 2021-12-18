@@ -1,4 +1,4 @@
-package com.tony.jourrneytest.ui
+package com.tony.journeytest.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
-import com.tony.jourrneytest.R
-import com.tony.jourrneytest.databinding.FragmentDownloadBinding
+import com.tony.journeytest.R
+import com.tony.journeytest.databinding.FragmentDownloadBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

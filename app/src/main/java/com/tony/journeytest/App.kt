@@ -1,4 +1,4 @@
-package com.tony.jourrneytest
+package com.tony.journeytest
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

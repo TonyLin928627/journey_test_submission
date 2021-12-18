@@ -1,9 +1,7 @@
-package com.tony.jourrneytest.restApi
-import com.tony.jourrneytest.entities.Comment
-import com.tony.jourrneytest.entities.Post
-import retrofit2.Response
+package com.tony.journeytest.restApi
+import com.tony.journeytest.entities.Comment
+import com.tony.journeytest.entities.Post
 import retrofit2.http.*
-import java.util.*
 
 interface IJsonPlaceholderApi {
     @GET("/posts")

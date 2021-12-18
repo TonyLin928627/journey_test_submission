@@ -1,4 +1,4 @@
-package com.tony.jourrneytest
+package com.tony.journeytest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

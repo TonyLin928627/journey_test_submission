@@ -1,8 +1,8 @@
-package com.tony.jourrneytest.repositories
+package com.tony.journeytest.repositories
 
-import com.tony.jourrneytest.entities.Comment
+import com.tony.journeytest.entities.Comment
 import kotlinx.coroutines.flow.Flow
-import com.tony.jourrneytest.entities.Post
+import com.tony.journeytest.entities.Post
 
 interface IPostRepository {
     suspend fun downloadPostsAndComments()

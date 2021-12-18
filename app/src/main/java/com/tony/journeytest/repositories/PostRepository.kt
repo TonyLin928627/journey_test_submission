@@ -1,10 +1,10 @@
-package com.tony.jourrneytest.repositories
+package com.tony.journeytest.repositories
 
-import com.tony.jourrneytest.db.daos.CommentDao
-import com.tony.jourrneytest.db.daos.PostDao
-import com.tony.jourrneytest.entities.Comment
-import com.tony.jourrneytest.entities.Post
-import com.tony.jourrneytest.restApi.IJsonPlaceholderApi
+import com.tony.journeytest.db.daos.CommentDao
+import com.tony.journeytest.db.daos.PostDao
+import com.tony.journeytest.entities.Comment
+import com.tony.journeytest.entities.Post
+import com.tony.journeytest.restApi.IJsonPlaceholderApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
