@@ -21,7 +21,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    
+
     buildFeatures {
         viewBinding true
         dataBinding true
@@ -39,6 +39,24 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    flavorDimensions "env"
+    productFlavors {
+        qa {
+            dimension "env"
+            buildConfigField("String", "API_BASE_URI", "\"https://jsonplaceholder.typicode.com\"")
+        }
+        uat {
+            dimension "env"
+            applicationIdSuffix ".uat"
+            buildConfigField("String", "API_BASE_URI", "\"https://jsonplaceholder.typicode.com/\"")
+        }
+        prod {
+            dimension "env"
+            applicationIdSuffix ""
+            buildConfigField("String", "API_BASE_URI", "\"https://jsonplaceholder.typicode.com/\"")
+        }
     }
 }
 
@@ -98,4 +116,8 @@ dependencies {
     kapt "androidx.room:room-compiler:2.3.0"
     implementation "androidx.room:room-ktx:2.3.0"
     testImplementation "androidx.room:room-testing:2.3.0"
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 }
