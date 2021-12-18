@@ -10,5 +10,8 @@ interface IJsonPlaceholderApi {
     suspend fun getPosts(): List<Post>
 
     @GET("comments")
+    suspend fun getComments(): List<Comment>
+
+    @GET("comments")
     suspend fun getCommentsByPostId(@Query("postId") postId: Int): List<Comment>
 }
