@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="post"
+            type="com.tony.journeytest.entities.Post" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/post_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="4dp"
+            android:orientation="vertical"
+            tools:context=".ui.CommentsOfPostFragment">
+
+            <TextView
+                android:id="@+id/title_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="@{String.format(@string/post_id_title, Integer.toString(post.id), post.title)}"
+                android:maxLines="2"
+                android:textColor="@color/purple_500"
+                android:textStyle="bold"
+                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
+                android:background="@drawable/border_bottom"
+                tools:text="title" />
+
+            <TextView
+                android:id="@+id/body_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{post.body}"
+                android:maxLines="8"
+                android:paddingBottom="8dp"
+                tools:text="body" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
