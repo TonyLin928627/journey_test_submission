@@ -24,7 +24,6 @@ class PostRepository @Inject constructor(
         }
     }
 
-
     override suspend fun downloadNewPosts() {
         apiService.getPosts().forEach { post ->
             postDao.checkIfPostExists(post.id).takeIf { it == 0 }?.let {

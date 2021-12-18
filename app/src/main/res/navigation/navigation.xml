@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation.xml">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
+    app:startDestination="@id/downloadFragment">
 
+    <fragment
+        android:id="@+id/downloadFragment"
+        android:name="com.tony.jourrneytest.ui.DownloadFragment"
+        android:label="fragment_download"
+        tools:layout="@layout/fragment_download" >
+        <action
+            android:id="@+id/action_downloadFragment_to_postsFragment"
+            app:destination="@id/postsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentsOfPostFragment"
+        android:name="com.tony.jourrneytest.ui.CommentsOfPostFragment"
+        android:label="fragment_comment_of_post"
+        tools:layout="@layout/fragment_comments_of_post" >
+        <argument
+            android:name="selectedPost"
+            app:argType="com.tony.jourrneytest.entities.Post" />
+    </fragment>
+    <fragment
+        android:id="@+id/postsFragment"
+        android:name="com.tony.jourrneytest.ui.PostsFragment"
+        android:label="fragment_posts"
+        tools:layout="@layout/fragment_posts" >
+        <action
+            android:id="@+id/action_postsFragment_to_commentsOfPostFragment"
+            app:destination="@id/commentsOfPostFragment" />
+    </fragment>
 </navigation>

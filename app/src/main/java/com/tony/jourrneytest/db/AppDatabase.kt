@@ -15,7 +15,7 @@ import com.tony.jourrneytest.entities.Post
         Post::class,
         Comment::class
     ],
-    version = 1)
+    version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao
     abstract fun commentDao(): CommentDao
