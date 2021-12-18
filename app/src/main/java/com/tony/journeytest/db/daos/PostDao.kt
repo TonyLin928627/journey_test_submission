@@ -1,6 +1,7 @@
 package com.tony.journeytest.db.daos
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.tony.journeytest.entities.Post
@@ -19,4 +20,7 @@ interface  PostDao {
 
     @Query("SELECT count(*) FROM posts WHERE id = :id ")
     fun checkIfPostExists(id: Int): Int
+
+    @Query("DELETE FROM posts")
+    fun delete()
 }

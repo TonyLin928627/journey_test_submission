@@ -16,4 +16,7 @@ interface CommentDao {
 
     @Query("SELECT count(*) FROM comments WHERE id = :id")
     fun checkIfCommentExists(id: Int): Int
+
+    @Query("DELETE FROM comments")
+    fun delete()
 }

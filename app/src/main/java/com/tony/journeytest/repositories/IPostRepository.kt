@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import com.tony.journeytest.entities.Post
 
 interface IPostRepository {
-    suspend fun downloadPostsAndComments()
+    suspend fun downloadPostsAndComments(): Pair<Int, Int>
 
     suspend fun downloadNewPosts()
 
@@ -19,5 +19,7 @@ interface IPostRepository {
 
     suspend fun getCommentsOfPostWithTitleOrBody(post: Post, title: String, body: String): Flow<List<Comment>>
 
+    suspend fun deletePostsAndComments()
 
+    fun isDownloadingNeeded(): Boolean
 }

@@ -6,18 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.tony.journeytest.R
 import com.tony.journeytest.databinding.FragmentDownloadBinding
+import com.tony.journeytest.viewModels.DownloadViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DownloadFragment : Fragment() {
     private lateinit var binding: FragmentDownloadBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val viewModel: DownloadViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,12 +29,28 @@ class DownloadFragment : Fragment() {
             R.layout.fragment_download,
             container, false
         )
+        this.binding.lifecycleOwner = this.viewLifecycleOwner
+        this.binding.viewModel = this.viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.binding.downloadLabel.setOnClickListener (Navigation.createNavigateOnClickListener(R.id.postsFragment))
+        when (viewModel.shouldStartDownload()){
+            true -> {
+                this.viewModel.startDownloading()
+
+                this.viewModel.isDownloadSuccess.observe(this.viewLifecycleOwner) { isSuccess ->
+                    when (isSuccess){
+                        true -> this.binding.nextButton.setOnClickListener (Navigation.createNavigateOnClickListener(R.id.postsFragment))
+                    }
+                }
+            }
+
+            false -> {
+                findNavController().navigate(R.id.postsFragment)
+            }
+        }
     }
 }

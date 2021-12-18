@@ -2,6 +2,7 @@ package com.tony.journeytest.restApi
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiServiceBuilder {
@@ -24,7 +25,7 @@ object ApiServiceBuilder {
 
     private fun getRetrofitBuilder(baseUrl: String, httpClient: OkHttpClient) : Retrofit.Builder {
         return Retrofit.Builder()
-            .client(httpClient)
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(baseUrl)
     }
 }

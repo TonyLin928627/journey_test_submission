@@ -1,5 +1,7 @@
 package com.tony.journeytest.repositories
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.tony.journeytest.db.daos.CommentDao
 import com.tony.journeytest.db.daos.PostDao
 import com.tony.journeytest.entities.Comment
@@ -11,17 +13,30 @@ import javax.inject.Inject
 class PostRepository @Inject constructor(
     private val apiService: IJsonPlaceholderApi,
     private val postDao: PostDao,
-    private val commentDao: CommentDao)
+    private val commentDao: CommentDao,
+    context: Context)
 : IPostRepository {
 
-    override suspend fun downloadPostsAndComments() {
-        apiService.getPosts().forEach { post ->
+    private val sharedPreferences = context.getSharedPreferences(this::class.java.canonicalName, Context.MODE_PRIVATE)
+
+    override suspend fun deletePostsAndComments(){
+        postDao.delete()
+        commentDao.delete()
+    }
+
+    override suspend fun downloadPostsAndComments(): Pair<Int, Int> {
+        var postCount = 0
+        apiService.getPosts().also { postCount = it.size }.forEach { post ->
             postDao.insertPost(post)
         }
 
-        apiService.getComments().forEach { comment->
+        var commentCount = 0
+        apiService.getComments().also { commentCount = it.size }.forEach { comment->
             commentDao.insertComment(comment = comment)
         }
+
+        sharedPreferences.edit().putLong("LastDownloadTime", System.currentTimeMillis()).apply()
+        return Pair(postCount, commentCount)
     }
 
     override suspend fun downloadNewPosts() {
@@ -35,7 +50,7 @@ class PostRepository @Inject constructor(
     override suspend fun downloadNewCommentsOfPost(post: Post) {
         apiService.getCommentsByPostId(postId = post.id).forEach { comment->
             commentDao.checkIfCommentExists(comment.id).takeIf { it == 0 }?.let {
-                commentDao.insertComment(comment = comment)
+//                commentDao.insertComment(comment = comment)
             }
         }
     }
@@ -56,4 +71,7 @@ class PostRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override fun isDownloadingNeeded(): Boolean {
+        return (System.currentTimeMillis() - sharedPreferences.getLong("LastDownloadTime", 0)) > 30*1000
+    }
 }
