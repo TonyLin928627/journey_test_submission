@@ -20,19 +20,18 @@ class PostsViewModel @Inject constructor(
     private val searchText = context.resources.getText(R.string.search)
     private val resultFoundText = context.getText(R.string.result_found)
 
-    val searchKey = MutableLiveData<String>("")
-
-    val postsToDisplay = searchKey.switchMap { searchKey ->
+    //region posts
+    val postSearchKey = MutableLiveData<String>("")
+    val postsToDisplay = postSearchKey.switchMap { searchKey ->
             when (searchKey.isNotBlank()) {
                 true -> postsRepository.getPostsWithSearchKey(searchKey = searchKey).asLiveData()
                 false -> postsRepository.getAllPosts().asLiveData()
             }
 
     }
-
-    val searchResultCount = postsToDisplay.switchMap {
+    val postSearchResultCount = postsToDisplay.switchMap {
         MutableLiveData<String?>().apply {
-            when (searchKey.value?.isNotBlank()) {
+            when (postSearchKey.value?.isNotBlank()) {
                 true -> "${it.size} $resultFoundText"
                 else -> searchText.toString()
             }.let {
@@ -40,9 +39,14 @@ class PostsViewModel @Inject constructor(
             }
         }
     }
+    //endregion
 
+    //region comments of selected post
     private val _selectedPost = MutableLiveData<Post?>(null)
-    val commentsOfSelectedPost: LiveData<List<Comment>> = _selectedPost.switchMap { selectedPost ->
+    var selectedPost: Post? = null
+    set(value) { field = value; this._selectedPost.postValue(value)}
+
+    private val commentsOfSelectedPost: LiveData<List<Comment>> = _selectedPost.switchMap { selectedPost ->
         MutableLiveData<List<Comment>>().apply {
             selectedPost?.let {
                 viewModelScope.launch(Dispatchers.IO){
@@ -54,6 +58,33 @@ class PostsViewModel @Inject constructor(
         }
     }
 
-    var selectedPost: Post? = null
-    set(value) { field = value; this._selectedPost.postValue(value)}
+    val commentSearchKey = MutableLiveData<String>("")
+
+    val commentsToDisplay = commentSearchKey.switchMap { searchKey ->
+        when (searchKey.isNotBlank()){
+            false -> commentsOfSelectedPost
+            true -> {
+                MutableLiveData<List<Comment>>().apply {
+                    selectedPost?.let {
+                        viewModelScope.launch(Dispatchers.IO){
+                            postValue(postsRepository.getCommentsOfPostWithSearchKey(post = it, searchKey = searchKey))
+                        }
+
+                    } ?: this.postValue(emptyList())
+
+                }
+            }
+        }
+    }
+    val searchCommentsResultCount = commentsToDisplay.switchMap {
+        MutableLiveData<String?>().apply {
+            when (commentSearchKey.value?.isNotBlank()) {
+                true -> "${it.size} $resultFoundText"
+                else -> searchText.toString()
+            }.let {
+                postValue(it)
+            }
+        }
+    }
+    //end region
 }

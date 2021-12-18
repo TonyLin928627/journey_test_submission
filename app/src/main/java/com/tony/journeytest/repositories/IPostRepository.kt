@@ -16,4 +16,6 @@ interface IPostRepository {
     fun getCommentsOfPost(post: Post): List<Comment>
 
     fun isDownloadingNeeded(): Boolean
+
+    suspend fun getCommentsOfPostWithSearchKey(post: Post, searchKey: String): List<Comment>
 }

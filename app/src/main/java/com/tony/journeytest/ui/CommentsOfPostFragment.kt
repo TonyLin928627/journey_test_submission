@@ -36,6 +36,7 @@ class CommentsOfPostFragment : Fragment() {
             container, false
         )
 
+        this.binding.viewModel = this.viewModel
         this.binding.lifecycleOwner = this.viewLifecycleOwner
         return binding.root
     }
@@ -44,7 +45,7 @@ class CommentsOfPostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //1. load and populate the comments
-        this.viewModel.commentsOfSelectedPost.observe(this.viewLifecycleOwner) { commentsOfSelectedPost ->
+        this.viewModel.commentsToDisplay.observe(this.viewLifecycleOwner) { commentsOfSelectedPost ->
             this.setupListView(commentsOfSelectedPost)
         }
 
