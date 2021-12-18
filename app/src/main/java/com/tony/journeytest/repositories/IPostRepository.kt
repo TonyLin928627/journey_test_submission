@@ -11,11 +11,11 @@ interface IPostRepository {
 
     suspend fun downloadNewCommentsOfPost(post: Post)
 
-    suspend fun getAllPosts(): Flow<List<Post>>
+    fun getAllPosts(): Flow<List<Post>>
 
     suspend fun getPostsWithTitleOrBody(title: String, body: String): Flow<List<Post>>
 
-    suspend fun getCommentsOfPost(post: Post): Flow<List<Comment>>
+    fun getCommentsOfPost(post: Post): List<Comment>
 
     suspend fun getCommentsOfPostWithTitleOrBody(post: Post, title: String, body: String): Flow<List<Comment>>
 

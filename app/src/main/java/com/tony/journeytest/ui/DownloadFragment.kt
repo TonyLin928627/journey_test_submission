@@ -43,13 +43,13 @@ class DownloadFragment : Fragment() {
 
                 this.viewModel.isDownloadSuccess.observe(this.viewLifecycleOwner) { isSuccess ->
                     when (isSuccess){
-                        true -> this.binding.nextButton.setOnClickListener (Navigation.createNavigateOnClickListener(R.id.postsFragment))
+                        true -> this.binding.nextButton.setOnClickListener (Navigation.createNavigateOnClickListener(R.id.navigation_main))
                     }
                 }
             }
 
             false -> {
-                findNavController().navigate(R.id.postsFragment)
+                findNavController().navigate(R.id.navigation_main)
             }
         }
     }

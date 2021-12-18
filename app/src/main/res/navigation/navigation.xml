@@ -12,24 +12,27 @@
         tools:layout="@layout/fragment_download" >
         <action
             android:id="@+id/action_downloadFragment_to_postsFragment"
-            app:destination="@id/postsFragment" />
+            app:destination="@id/navigation_main" />
     </fragment>
-    <fragment
-        android:id="@+id/commentsOfPostFragment"
-        android:name="com.tony.journeytest.ui.CommentsOfPostFragment"
-        android:label="fragment_comment_of_post"
-        tools:layout="@layout/fragment_comments_of_post" >
-        <argument
-            android:name="selectedPost"
-            app:argType="com.tony.journeytest.entities.Post" />
-    </fragment>
-    <fragment
-        android:id="@+id/postsFragment"
-        android:name="com.tony.journeytest.ui.PostsFragment"
-        android:label="fragment_posts"
-        tools:layout="@layout/fragment_posts" >
-        <action
-            android:id="@+id/action_postsFragment_to_commentsOfPostFragment"
-            app:destination="@id/commentsOfPostFragment" />
-    </fragment>
+    <navigation android:id="@+id/navigation_main"
+        app:startDestination="@id/postsFragment">
+        <fragment
+            android:id="@+id/postsFragment"
+            android:name="com.tony.journeytest.ui.PostsFragment"
+            android:label="fragment_posts"
+            tools:layout="@layout/fragment_posts">
+            <action
+                android:id="@+id/action_postsFragment_to_commentsOfPostFragment"
+                app:destination="@id/commentsOfPostFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/commentsOfPostFragment"
+            android:name="com.tony.journeytest.ui.CommentsOfPostFragment"
+            android:label="fragment_comment_of_post"
+            tools:layout="@layout/fragment_comments_of_post">
+            <argument
+                android:name="selectedPost"
+                app:argType="com.tony.journeytest.entities.Post" />
+        </fragment>
+    </navigation>
 </navigation>

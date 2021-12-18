@@ -50,12 +50,12 @@ class PostRepository @Inject constructor(
     override suspend fun downloadNewCommentsOfPost(post: Post) {
         apiService.getCommentsByPostId(postId = post.id).forEach { comment->
             commentDao.checkIfCommentExists(comment.id).takeIf { it == 0 }?.let {
-//                commentDao.insertComment(comment = comment)
+                commentDao.insertComment(comment = comment)
             }
         }
     }
 
-    override suspend fun getAllPosts(): Flow<List<Post>> {
+    override fun getAllPosts(): Flow<List<Post>> {
         return postDao.getPosts()
     }
 
@@ -63,7 +63,7 @@ class PostRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getCommentsOfPost(post: Post): Flow<List<Comment>> {
+    override fun getCommentsOfPost(post: Post): List<Comment> {
        return commentDao.getCommentsByPostId(postId = post.id)
     }
 

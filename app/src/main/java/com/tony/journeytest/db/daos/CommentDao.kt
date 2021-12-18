@@ -12,7 +12,7 @@ interface CommentDao {
     fun insertComment(comment: Comment)
 
     @Query("SELECT * FROM comments WHERE postId = :postId ORDER by id")
-    fun getCommentsByPostId(postId: Int) : Flow<List<Comment>>
+    fun getCommentsByPostId(postId: Int) : List<Comment>
 
     @Query("SELECT count(*) FROM comments WHERE id = :id")
     fun checkIfCommentExists(id: Int): Int
