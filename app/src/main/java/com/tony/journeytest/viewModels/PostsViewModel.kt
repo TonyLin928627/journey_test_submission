@@ -1,22 +1,45 @@
 package com.tony.journeytest.viewModels
 
+import android.content.Context
 import androidx.lifecycle.*
+import com.tony.journeytest.R
 import com.tony.journeytest.entities.Comment
 import com.tony.journeytest.entities.Post
 import com.tony.journeytest.repositories.IPostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PostsViewModel @Inject constructor(
-    private val postsRepository: IPostRepository
+    private val postsRepository: IPostRepository,
+    context: Context
 ) : ViewModel()  {
 
-    val allPosts =  postsRepository.getAllPosts().asLiveData()
+    private val searchText = context.resources.getText(R.string.search)
+    private val resultFoundText = context.getText(R.string.result_found)
+
+    val searchKey = MutableLiveData<String>("")
+
+    val postsToDisplay = searchKey.switchMap { searchKey ->
+            when (searchKey.isNotBlank()) {
+                true -> postsRepository.getPostsWithSearchKey(searchKey = searchKey).asLiveData()
+                false -> postsRepository.getAllPosts().asLiveData()
+            }
+
+    }
+
+    val searchResultCount = postsToDisplay.switchMap {
+        MutableLiveData<String?>().apply {
+            when (searchKey.value?.isNotBlank()) {
+                true -> "${it.size} $resultFoundText"
+                else -> searchText.toString()
+            }.let {
+                postValue(it)
+            }
+        }
+    }
 
     private val _selectedPost = MutableLiveData<Post?>(null)
     val commentsOfSelectedPost: LiveData<List<Comment>> = _selectedPost.switchMap { selectedPost ->

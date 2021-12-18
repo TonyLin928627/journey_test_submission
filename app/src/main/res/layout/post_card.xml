@@ -35,9 +35,9 @@
                 android:maxLines="2"
                 android:textColor="@color/purple_500"
                 android:textStyle="bold"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                 android:background="@drawable/border_bottom"
-                tools:text="title" />
+                tools:text="title"
+                app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24" />
 
             <TextView
                 android:id="@+id/body_label"

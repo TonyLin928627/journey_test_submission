@@ -35,13 +35,15 @@ class PostsFragment : Fragment() {
             container, false
         )
         this.binding.lifecycleOwner = this.viewLifecycleOwner
+        this.binding.viewModel = this.viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.viewModel.allPosts.observe(viewLifecycleOwner){ posts ->
+        //populate the all or filtered posts
+        this.viewModel.postsToDisplay.observe(viewLifecycleOwner){ posts ->
             setupListView(posts)
         }
     }
@@ -54,6 +56,9 @@ class PostsFragment : Fragment() {
         }
     }
 
+    /**
+     * navigate to comment details when the post is clicked
+     */
     private fun onPostSelected(selectedPost: Post) {
         val action = PostsFragmentDirections.actionPostsFragmentToCommentsOfPostFragment(selectedPost)
         findNavController().navigate(action)

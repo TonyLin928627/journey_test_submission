@@ -46,7 +46,6 @@ object AppModule {
         )
     }
 
-
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext applicationContext: Context): AppDatabase {
