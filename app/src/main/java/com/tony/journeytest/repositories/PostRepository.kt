@@ -72,6 +72,6 @@ class PostRepository @Inject constructor(
     }
 
     override fun isDownloadingNeeded(): Boolean {
-        return (System.currentTimeMillis() - sharedPreferences.getLong("LastDownloadTime", 0)) > 30*1000
+        return (System.currentTimeMillis() - sharedPreferences.getLong("LastDownloadTime", 0)) > 60_000
     }
 }

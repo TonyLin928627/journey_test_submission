@@ -11,7 +11,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+
+        android:background="@color/cardview_dark_background">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/post_card_view"
@@ -36,10 +38,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_bottom"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/purple_500"
-                    android:text="Selected Post" />
+                    android:text="Selected Post"
+                    app:drawableStartCompat="@drawable/ic_baseline_keyboard_arrow_left_24" />
 
                 <TextView
                     android:id="@+id/title_label"
@@ -68,7 +71,6 @@
             android:id="@+id/selected_post_comments_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_bottom"
             android:gravity="center_horizontal"
             android:text="Comments"
             android:layout_marginTop="12dp"
@@ -76,22 +78,20 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:paddingVertical="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@color/white"
             app:layout_constraintTop_toBottomOf="@id/post_card_view" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/cardview_dark_background"
+
             android:id="@+id/comment_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginVertical="12dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/selected_post_comments_label"
-            tools:itemCount="5"
-            tools:listitem="@layout/comment_card" />
+            app:layout_constraintTop_toBottomOf="@id/selected_post_comments_label" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

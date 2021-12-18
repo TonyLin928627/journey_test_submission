@@ -53,12 +53,14 @@ class CommentsOfPostFragment : Fragment() {
             this.binding.selectedPost = it
             this.viewModel.selectedPost = it
         }
+
+        this.binding.postCardView.setOnClickListener{findNavController().popBackStack()}
     }
 
     private fun setupListView(commentsOfSelectedPost: List<Comment>) {
-        PostListAdapter().also { adapter ->
+        CommentListAdapter().also { adapter ->
             this.binding.commentList.adapter = adapter
-            adapter.submitList(listOf(this.commentsOfPostFragmentArgs.selectedPost))
+            adapter.submitList(commentsOfSelectedPost)
         }
     }
 }
