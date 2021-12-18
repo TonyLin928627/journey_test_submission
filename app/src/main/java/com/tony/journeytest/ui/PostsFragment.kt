@@ -35,13 +35,14 @@ class PostsFragment : Fragment() {
             container, false
         )
         this.binding.lifecycleOwner = this.viewLifecycleOwner
+        this.binding.viewModel = this.viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.viewModel.allPosts.observe(viewLifecycleOwner){ posts ->
+        this.viewModel.postsToDisplay.observe(viewLifecycleOwner){ posts ->
             setupListView(posts)
         }
     }

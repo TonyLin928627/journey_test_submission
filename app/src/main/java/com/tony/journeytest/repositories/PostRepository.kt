@@ -2,12 +2,14 @@ package com.tony.journeytest.repositories
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.tony.journeytest.db.daos.CommentDao
 import com.tony.journeytest.db.daos.PostDao
 import com.tony.journeytest.entities.Comment
 import com.tony.journeytest.entities.Post
 import com.tony.journeytest.restApi.IJsonPlaceholderApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PostRepository @Inject constructor(
@@ -59,16 +61,18 @@ class PostRepository @Inject constructor(
         return postDao.getPosts()
     }
 
-    override suspend fun getPostsWithTitleOrBody(title: String, body: String): Flow<List<Post>> {
-        TODO("Not yet implemented")
+    override fun getPostsWithSearchKey(searchKey: String): Flow<List<Post>>{
+        return flow {
+            val postIds = commentDao.getPostIdsWithSearchKey("%$searchKey%")
+            val posts = postDao.getPostIdsWithSearchKey("%$searchKey%", postIds)
+
+            Log.d("searchKey", "$searchKey ${posts.size}")
+            emit(posts)
+        }
     }
 
     override fun getCommentsOfPost(post: Post): List<Comment> {
        return commentDao.getCommentsByPostId(postId = post.id)
-    }
-
-    override suspend fun getCommentsOfPostWithTitleOrBody(post: Post, title: String, body: String): Flow<List<Comment>> {
-        TODO("Not yet implemented")
     }
 
     override fun isDownloadingNeeded(): Boolean {

@@ -23,4 +23,7 @@ interface  PostDao {
 
     @Query("DELETE FROM posts")
     fun delete()
+
+    @Query("SELECT * FROM posts WHERE title LIKE :searchKey OR body LIKE :searchKey OR id IN (:postIds)")
+    suspend fun getPostIdsWithSearchKey(searchKey: String, postIds: List<Int>): List<Post>
 }

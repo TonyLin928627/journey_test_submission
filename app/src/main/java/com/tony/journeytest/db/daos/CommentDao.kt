@@ -19,4 +19,7 @@ interface CommentDao {
 
     @Query("DELETE FROM comments")
     fun delete()
+
+    @Query("SELECT postId FROM comments WHERE body LIKE :searchKey")
+    suspend fun getPostIdsWithSearchKey(searchKey: String): List<Int>
 }

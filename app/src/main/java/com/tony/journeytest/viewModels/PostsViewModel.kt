@@ -6,8 +6,6 @@ import com.tony.journeytest.entities.Post
 import com.tony.journeytest.repositories.IPostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,7 +14,26 @@ class PostsViewModel @Inject constructor(
     private val postsRepository: IPostRepository
 ) : ViewModel()  {
 
-    val allPosts =  postsRepository.getAllPosts().asLiveData()
+    val searchKey = MutableLiveData<String>("")
+
+    val postsToDisplay = searchKey.switchMap { searchKey ->
+            when (searchKey.isNotBlank()) {
+                true -> postsRepository.getPostsWithSearchKey(searchKey = searchKey).asLiveData()
+                false -> postsRepository.getAllPosts().asLiveData()
+            }
+
+    }
+
+    val searchResultCount = postsToDisplay.switchMap {
+        MutableLiveData<String?>().apply {
+            when (searchKey.value?.isNotBlank()) {
+                true -> "${it.size.toString()} results found"
+                else -> "Search"
+            }.let {
+                postValue(it)
+            }
+        }
+    }
 
     private val _selectedPost = MutableLiveData<Post?>(null)
     val commentsOfSelectedPost: LiveData<List<Comment>> = _selectedPost.switchMap { selectedPost ->

@@ -14,4 +14,6 @@ data class Comment(
 
     val name: String,
     val email: String,
+
+    @ColumnInfo(index = true)
     val body: String)
