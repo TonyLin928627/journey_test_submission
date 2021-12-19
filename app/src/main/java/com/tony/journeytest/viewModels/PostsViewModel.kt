@@ -86,5 +86,5 @@ class PostsViewModel @Inject constructor(
             }
         }
     }
-    //end region
+    //endregion
 }
