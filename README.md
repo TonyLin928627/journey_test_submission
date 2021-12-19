@@ -11,6 +11,7 @@ ANDROID TEST
 		4. ViewModel</br>
 		5. LiveData</br>
 		6. Coroutines/Flow</br>
+		7. ViewBinding</br>
 - Use the endpoints at https://jsonplaceholder.typicode.com </br>
 		Requirement completed. The following two endpoints are used for fetching data with Retrofit 2.9</br>
 		 1. https://jsonplaceholder.typicode.com/posts</br>
