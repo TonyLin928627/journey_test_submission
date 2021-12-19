@@ -27,3 +27,6 @@ Search functionality on the posts list and comments list. </br>
 		Requirment implemented.  There is input field at the top of PostsFratments and CommentsOfPostFragment.</br>
 		1. In PostsFratments:  Populate the posts that have bodies containing the input search key OR have comments of which the title or body contains the search key</br>
 		2. In DownloadFragment: Populate the comments that have the title or body containing the search key.</br>
+
+**Due to some compatibility issues,  instead of using jdk1.8, please use jdk11 for Gradle to build the project. You can check it by
+    Preference -> Build, Execution, Deployment-> Build Tools-> Gradle (on Android Studio Mac)
